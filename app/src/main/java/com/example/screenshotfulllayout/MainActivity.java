@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -86,9 +89,10 @@ public class MainActivity extends AppCompatActivity {
         path = path + "/" + signature_pdf_ + System.currentTimeMillis() + ".pdf";// path where pdf will be stored
 
         //View u = findViewById(R.id.scroll);
-        View z = findViewById(R.id.scroll); // parent view
-        //totalHeight = z.getChildAt(0).getHeight();// parent view height
-        //totalWidth = z.getChildAt(0).getWidth();// parent view width
+        @SuppressLint("WrongViewCast") ScrollView z = findViewById(R.id.scroll); // parent view
+
+        totalHeight = z.getChildAt(0).getHeight();// parent view height
+        totalWidth = z.getChildAt(0).getWidth();// parent view width
 
         //Save bitmap to  below path
         String extr = Environment.getExternalStorageDirectory() + "/Signature/";
@@ -97,16 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
         String fileName = signature_img_ + ".jpg";
         myPath = new File(extr, fileName);
-        imagesUri = myPath.getPath().substring(path.indexOf(":")+1);;
+        imagesUri = myPath.getPath().substring(path.indexOf(":")+1);
 
         FileOutputStream fos = null;
-        b = getBitmapFromView(z);
+        b = getBitmapFromView(z, totalHeight, totalWidth);
 
-        ImageView tv1;
-        tv1= (ImageView) findViewById(R.id.imageView);
-        tv1.setImageBitmap(b);
-
-        b = getBitmapFromView(z);
 
         try {
             fos = new FileOutputStream(myPath);
@@ -114,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
             fos.flush();
             fos.close();
 
+            ImageView tv1;
+            tv1= (ImageView) findViewById(R.id.imageView);
+            tv1.setImageBitmap(b);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -156,9 +158,16 @@ public class MainActivity extends AppCompatActivity {
         openPdf(filePath);// You can open pdf after complete
     }
 
-    public Bitmap getBitmapFromView(View view){
-        view.setDrawingCacheEnabled(true);
-        return view.getDrawingCache();
+    public Bitmap getBitmapFromView(View view, int totalHeight, int totalWidth) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(totalWidth,totalHeight , Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return returnedBitmap;
     }
 
     public void openPdf(File file){
