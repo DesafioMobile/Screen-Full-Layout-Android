@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
 
-        press =  findViewById(R.id.btn_add_sign);
+        press =  findViewById(R.id.btn_generate_pdf);
         press.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,15 +107,18 @@ public class MainActivity extends AppCompatActivity {
         FileOutputStream fos = null;
         b = getBitmapFromView(z);
 
+        ImageView tv1;
+        tv1= (ImageView) findViewById(R.id.imageView);
+        tv1.setImageBitmap(b);
+
+        b = getBitmapFromView(z);
+
         try {
             fos = new FileOutputStream(myPath);
             b.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.flush();
             fos.close();
 
-            ImageView tv1;
-            tv1= (ImageView) findViewById(R.id.imageView);
-            tv1.setImageBitmap(b);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
