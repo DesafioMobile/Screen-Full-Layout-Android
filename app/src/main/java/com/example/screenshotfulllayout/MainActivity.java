@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     private Button press;
 
-
     public String path;
     public String signature_pdf_ = "meupdf";
     public String signature_img_ = "minhaimagem";
