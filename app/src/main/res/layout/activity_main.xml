@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,47 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rl"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary">
-
-                <TextView
-                    android:id="@+id/header_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="Signature"
-                    android:textColor="@android:color/white"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivback"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:padding="10dp"
-                    android:src="@drawable/abc_vector_test" />
-
-                <ImageView
-                    android:id="@+id/ic_downlod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:padding="10dp"
-                    android:src="@drawable/abc_vector_test"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
 
 
             <LinearLayout
@@ -135,13 +94,13 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-<!--                <android.support.v7.widget.RecyclerView-->
-<!--                    android:id="@+id/recyclerViewCheck"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:nestedScrollingEnabled="false">-->
+                <!--                <android.support.v7.widget.RecyclerView-->
+                <!--                    android:id="@+id/recyclerViewCheck"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:nestedScrollingEnabled="false">-->
 
-<!--                </android.support.v7.widget.RecyclerView>-->
+                <!--                </android.support.v7.widget.RecyclerView>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -154,21 +113,21 @@
                     android:textStyle="bold" />
 
 
-<!--                <android.support.v7.widget.RecyclerView-->
-<!--                    android:id="@+id/recyclerView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="20dp"-->
-<!--                    android:nestedScrollingEnabled="false" />-->
+                <!--                <android.support.v7.widget.RecyclerView-->
+                <!--                    android:id="@+id/recyclerView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="20dp"-->
+                <!--                    android:nestedScrollingEnabled="false" />-->
 
                 <Button
                     android:id="@+id/btn_add_sign"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
 
                     android:text="Add Signature"
                     android:textColor="@color/colorPrimary"
@@ -178,13 +137,14 @@
                     android:id="@+id/btn_save_form"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="30dp"
                     android:text="Save Signature"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp" />
+
             </LinearLayout>
 
             <LinearLayout

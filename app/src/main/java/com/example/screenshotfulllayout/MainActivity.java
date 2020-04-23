@@ -2,33 +2,49 @@ package com.example.screenshotfulllayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
-    Button press;
+    private Button press;
+
+
+    public String path;
+    public String signature_pdf_ = "meupdf";
+    public String signature_img_ = "minhaimagem";
+    public int totalHeight;
+    public int totalWidth;
+    public File myPath;
+    public String imagesUri;
+    public Bitmap b;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == PERMISSION_REQUEST_STORAGE){
@@ -40,19 +56,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
 
@@ -63,17 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 takeScreenShot();
             }
         });
-
     }
-
-    public String path;
-    public String signature_pdf_ = "meupdf";
-    public String signature_img_ = "minhaimagem";
-    public int totalHeight;
-    public int totalWidth;
-    public File myPath;
-    public String imagesUri;
-    public Bitmap b;
 
     private void takeScreenShot() {
 
@@ -94,19 +98,14 @@ public class MainActivity extends AppCompatActivity {
         //Save bitmap to  below path
         String extr = Environment.getExternalStorageDirectory() + "/Signature/";
         File file = new File(extr);
-        if (!file.exists())
-            file.mkdir();
+        if (!file.exists()) file.mkdir();
+
         String fileName = signature_img_ + ".jpg";
         myPath = new File(extr, fileName);
-        imagesUri = myPath.getPath();
+        imagesUri = myPath.getPath().substring(path.indexOf(":")+1);;
+
         FileOutputStream fos = null;
-
-
-
-
         b = getBitmapFromView(z);
-
-//
 
         try {
             fos = new FileOutputStream(myPath);
@@ -123,9 +122,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-        //createPdf();// create pdf after creating bitmap and saving
 
+        createPdf();// create pdf after creating bitmap and saving
     }
+
     private void createPdf() {
 
         PdfDocument document = new PdfDocument();
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         paint.setColor(Color.BLUE);
         canvas.drawBitmap(bitmap, 0, 0, null);
         document.finishPage(page);
+
         File filePath = new File(path);
         try {
             document.writeTo(new FileOutputStream(filePath));
@@ -156,10 +157,18 @@ public class MainActivity extends AppCompatActivity {
         // close the document
         document.close();
 
-        //openPdf(path);// You can open pdf after complete
+        openPdf(filePath);// You can open pdf after complete
     }
+
     public Bitmap getBitmapFromView(View view){
         view.setDrawingCacheEnabled(true);
         return view.getDrawingCache();
+    }
+
+    public void openPdf(File file){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(FileProvider.getUriForFile(MainActivity.this, "com.example.screenshotfulllayout.provider", file), "application/pdf");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
     }
 }
