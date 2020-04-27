@@ -24,6 +24,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -68,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
 
-        press =  findViewById(R.id.btn_generate_pdf);
-        press.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 takeScreenShot();
             }
         });
@@ -113,9 +117,7 @@ public class MainActivity extends AppCompatActivity {
             fos.flush();
             fos.close();
 
-            ImageView tv1;
-            tv1= (ImageView) findViewById(R.id.imageView);
-            tv1.setImageBitmap(b);
+
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
