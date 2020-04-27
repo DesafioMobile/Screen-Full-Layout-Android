@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/scroll">
+
+            <LinearLayout
+                android:id="@+id/sd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/time_date_stamp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:padding="5dp"
+                            android:text="Time/Date Stamp:"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_company"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:padding="5dp"
+                                android:text="Comapny:"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16dp" />
+
+
+                            <TextView
+                                android:id="@+id/txt_user_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:padding="5dp"
+                                android:text="User:"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16dp" />
+
+
+                            <TextView
+                                android:id="@+id/txt_project"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:padding="5dp"
+                                android:text="Project:"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/txt_close_out"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+
+                        android:padding="5dp"
+                        android:text="Signature Checklist: "
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!--                <android.support.v7.widget.RecyclerView-->
+                    <!--                    android:id="@+id/recyclerViewCheck"-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:nestedScrollingEnabled="false">-->
+
+                    <!--                </android.support.v7.widget.RecyclerView>-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+                        android:text="Signature here: "
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+
+                    <!--                <android.support.v7.widget.RecyclerView-->
+                    <!--                    android:id="@+id/recyclerView"-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:layout_marginBottom="20dp"-->
+                    <!--                    android:nestedScrollingEnabled="false" />-->
+
+                    <Button
+                        android:id="@+id/btn_add_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+
+                        android:text="Add Signature"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15dp" />
+
+                    <Button
+                        android:id="@+id/btn_save_form"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:text="Save Signature"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper, velit eu sodales malesuada, nisl nulla venenatis elit, at molestie nibh turpis at elit. In scelerisque lacinia nisl, eu viverra lectus ornare at. Duis augue est, aliquet id ornare in, cursus et nisi. Ut diam leo, lobortis at molestie vitae, finibus vitae mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam egestas, tellus id tincidunt fermentum, odio nulla ultrices neque, sit amet vulputate est nisl nec risus. Nullam ac orci vel mi lobortis pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam id fringilla nisl. Donec consectetur elementum nibh quis scelerisque.  Pellentesque rhoncus, sapien eget venenatis vehicula, lectus tellus auctor turpis, at tristique mauris sem in nulla. Sed ex nunc, sodales eu massa non, venenatis mattis sapien. Sed malesuada neque libero, in suscipit risus accumsan at. Vestibulum non neque eget augue tempor venenatis. Nullam nec ullamcorper arcu. Cras non libero quis quam lacinia commodo a quis leo. Donec dolor ex, gravida elementum tincidunt nec, luctus eu risus.  Vivamus eget sollicitudin ligula. Phasellus et diam dictum, aliquet sem ut, ultricies diam. Nullam neque eros, sollicitudin efficitur quam quis, pharetra maximus nulla. Sed dui ante, ultricies quis tortor vel, egestas dapibus nunc. Donec nec odio eu massa accumsan eleifend. Praesent neque dui, aliquet non erat sit amet, aliquam auctor sem. Vestibulum pharetra, nisi ac ullamcorper blandit, erat elit aliquam neque, fringilla ullamcorper eros urna eget ante. Integer ut massa non dui dignissim porttitor pellentesque non massa. Donec facilisis sagittis est. Nulla egestas luctus lorem eget vestibulum." />
+
+                    <Button
+                        android:id="@+id/btn_generate_pdf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Generate PDF" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
