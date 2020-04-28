@@ -159,6 +159,4 @@ public class Home extends Fragment {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(intent);
     }
-
-
 }
