@@ -2,26 +2,13 @@ package com.example.screenshotfulllayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.pdf.PdfDocument;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -30,9 +17,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
+
     private FrameLayout flContainerForFragment;
-    BottomNavigationView navigation;
+    private BottomNavigationView navigation;
+
     private boolean noReplaceFragment;
+
     private static final String FRAGMENT_HOME = "HOME";
     private static final String FRAGMENT_PDF_LIST = "PDF_LIST";
 
@@ -77,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if(!noReplaceFragment) {//Frag será true apenas caso o usuario aperte o botao volta do device. Serve Apenas para mudar a cor do icon
+                    if(!noReplaceFragment) {
                         Home home_fragment = new Home();
                         managerFragment(home_fragment, FRAGMENT_HOME);
                     }

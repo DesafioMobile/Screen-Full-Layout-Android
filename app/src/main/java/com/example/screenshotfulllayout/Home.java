@@ -38,11 +38,6 @@ import java.io.IOException;
  */
 public class Home extends Fragment {
 
-    private static final int PERMISSION_REQUEST_STORAGE = 1000;
-    private static final int READ_REQUEST_CODE = 42;
-    private Button press;
-
-
     public String path;
     public String signature_pdf_ = "meupdf";
     public String signature_img_ = "minhaimagem";
@@ -107,9 +102,6 @@ public class Home extends Fragment {
             b.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.flush();
             fos.close();
-
-
-
         } catch (Exception e) {
             // TODO Auto-generated catch block
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
