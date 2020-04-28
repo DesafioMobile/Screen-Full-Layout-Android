@@ -36,7 +36,7 @@ import java.io.IOException;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class Home extends Fragment {
+public class HomeFragment extends Fragment {
 
     public String path;
     public String signature_pdf_ = "meupdf";
@@ -49,7 +49,7 @@ public class Home extends Fragment {
 
     View view_principal;
 
-    public Home() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 

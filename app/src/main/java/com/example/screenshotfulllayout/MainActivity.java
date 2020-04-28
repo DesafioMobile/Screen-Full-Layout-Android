@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //implementing fragment
-        Home home = new Home();
+        HomeFragment home = new HomeFragment();
         managerFragment(home, FRAGMENT_HOME);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -67,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     if(!noReplaceFragment) {
-                        Home home_fragment = new Home();
+                        HomeFragment home_fragment = new HomeFragment();
                         managerFragment(home_fragment, FRAGMENT_HOME);
                     }
                     return true;
                 case R.id.navigation_lista_pdf:
                     if(!noReplaceFragment) {
-                        PDF_LIST pdf_fragment = new PDF_LIST();
+                        PdfFragment pdf_fragment = new PdfFragment();
                         managerFragment(pdf_fragment, FRAGMENT_PDF_LIST);
                     }
                     return true;
