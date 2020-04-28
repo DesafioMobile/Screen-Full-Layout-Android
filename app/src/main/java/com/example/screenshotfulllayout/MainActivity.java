@@ -2,49 +2,28 @@ package com.example.screenshotfulllayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.pdf.PdfDocument;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
-    private static final int READ_REQUEST_CODE = 42;
-    private Button press;
+    private FrameLayout flContainerForFragment;
+    private BottomNavigationView navigation;
 
-    public String path;
-    public String signature_pdf_ = "meupdf";
-    public String signature_img_ = "minhaimagem";
-    public int totalHeight;
-    public int totalWidth;
-    public File myPath;
-    public String imagesUri;
-    public Bitmap b;
+    private boolean noReplaceFragment;
+
+    private static final String FRAGMENT_HOME = "HOME";
+    private static final String FRAGMENT_PDF_LIST = "PDF_LIST";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -63,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Fragments
+        flContainerForFragment = (FrameLayout) findViewById(R.id.flContainerForFragment);
+        navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //implementing fragment
+        Home home = new Home();
+        managerFragment(home, FRAGMENT_HOME);
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
@@ -70,111 +58,35 @@ public class MainActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
+    }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takeScreenShot();
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    if(!noReplaceFragment) {
+                        Home home_fragment = new Home();
+                        managerFragment(home_fragment, FRAGMENT_HOME);
+                    }
+                    return true;
+                case R.id.navigation_lista_pdf:
+                    if(!noReplaceFragment) {
+                        PDF_LIST pdf_fragment = new PDF_LIST();
+                        managerFragment(pdf_fragment, FRAGMENT_PDF_LIST);
+                    }
+                    return true;
             }
-        });
-    }
-
-    private void takeScreenShot() {
-
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Signature/");
-
-        if (!folder.exists()) {
-            boolean success = folder.mkdir();
+            return false;
         }
+    };
 
-        path = folder.getAbsolutePath();
-        path = path + "/" + signature_pdf_ + System.currentTimeMillis() + ".pdf";// path where pdf will be stored
-
-        //View u = findViewById(R.id.scroll);
-        @SuppressLint("WrongViewCast") ScrollView z = findViewById(R.id.scroll); // parent view
-
-        totalHeight = z.getChildAt(0).getHeight();// parent view height
-        totalWidth = z.getChildAt(0).getWidth();// parent view width
-
-        //Save bitmap to  below path
-        String extr = Environment.getExternalStorageDirectory() + "/Signature/";
-        File file = new File(extr);
-        if (!file.exists()) file.mkdir();
-
-        String fileName = signature_img_ + ".jpg";
-        myPath = new File(extr, fileName);
-        imagesUri = myPath.getPath().substring(path.indexOf(":")+1);
-
-        FileOutputStream fos = null;
-        b = getBitmapFromView(z, totalHeight, totalWidth);
-
-
-        try {
-            fos = new FileOutputStream(myPath);
-            b.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.flush();
-            fos.close();
-
-
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
-        createPdf();// create pdf after creating bitmap and saving
-    }
-
-    private void createPdf() {
-
-        PdfDocument document = new PdfDocument();
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(b.getWidth(), b.getHeight(), 1).create();
-        PdfDocument.Page page = document.startPage(pageInfo);
-
-        Canvas canvas = page.getCanvas();
-
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#ffffff"));
-        canvas.drawPaint(paint);
-
-        Bitmap bitmap = Bitmap.createScaledBitmap(b, b.getWidth(), b.getHeight(), true);
-
-        paint.setColor(Color.BLUE);
-        canvas.drawBitmap(bitmap, 0, 0, null);
-        document.finishPage(page);
-
-        File filePath = new File(path);
-        try {
-            document.writeTo(new FileOutputStream(filePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
-        }
-
-        // close the document
-        document.close();
-
-        openPdf(filePath);// You can open pdf after complete
-    }
-
-    public Bitmap getBitmapFromView(View view, int totalHeight, int totalWidth) {
-        Bitmap returnedBitmap = Bitmap.createBitmap(totalWidth,totalHeight , Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
-        view.draw(canvas);
-        return returnedBitmap;
-    }
-
-    public void openPdf(File file){
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(FileProvider.getUriForFile(MainActivity.this, "com.example.screenshotfulllayout.provider", file), "application/pdf");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(intent);
+    private void managerFragment(Fragment fragment, String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flContainerForFragment, fragment, tag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
