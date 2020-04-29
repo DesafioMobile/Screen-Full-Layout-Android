@@ -1,38 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/holder_view">
 
-    <TextView
-        android:id="@+id/main_line_title"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        app:srcCompat="@drawable/ic_insert_drive_file_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="16dp"
-        tools:text="Line 1" />
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-<!--    <ImageButton-->
-<!--        android:id="@id/main_line_more"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerVertical="true"-->
-<!--        android:layout_toStartOf="@+id/main_line_delete"-->
-<!--        android:background="?selectableItemBackground"-->
-<!--        android:contentDescription="@string/delete_view"-->
-<!--        android:padding="16dp"-->
-<!--        android:src="@drawable/ic_add_black_24dp" />-->
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do arquivo pdf"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_margin="8dp"/>
 
-<!--    <ImageButton-->
-<!--        android:id="@id/main_line_delete"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_centerVertical="true"-->
-<!--        android:background="?selectableItemBackground"-->
-<!--        android:contentDescription="@string/delete_view"-->
-<!--        android:padding="16dp"-->
-<!--        android:src="@drawable/ic_delete_black_24dp" />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="clip_horizontal|center"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/txt_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="06/01/2001"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:text="-"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_sizeFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="500KB" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -67,10 +68,31 @@ public class PdfFragment extends Fragment {
         ArrayList<FileModel> arrayFiles = new ArrayList<>();
 
         for (int i = 0; i < files.length; i++) {
-            arrayFiles.add(new FileModel(files[i].getName(), files[i].getAbsolutePath(), new Date(files[i].lastModified())));
+            arrayFiles.add(new FileModel(files[i].getName(),
+                    files[i].getAbsolutePath(),
+                    new Date(files[i].lastModified()),
+                    getFileSize(files[i])));
         }
 
         return arrayFiles;
     }
+    private static final DecimalFormat format = new DecimalFormat("#.##");
+    private static final long MiB = 1024 * 1024;
+    private static final long KiB = 1024;
 
+    public String getFileSize(File file) {
+
+        if (!file.isFile()) {
+            throw new IllegalArgumentException("Expected a file");
+        }
+        final double length = file.length();
+
+        if (length > MiB) {
+            return format.format(length / MiB) + " MiB";
+        }
+        if (length > KiB) {
+            return format.format(length / KiB) + " KiB";
+        }
+        return format.format(length) + " B";
+    }
 }

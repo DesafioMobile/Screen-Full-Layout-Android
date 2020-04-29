@@ -32,12 +32,16 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfHolder> {
 
     @Override
     public void onBindViewHolder(PdfHolder holder, final int position) {
-        holder.title.setText(String.format(Locale.getDefault(), "%s - %s",
-                mFiles.get(position).getFileName(),
-                mFiles.get(position).getFileDate().toString()
-        ));
+        holder.txt_name.setText(
+                mFiles.get(position).getFileName());
+//        holder.txt_data.setText(
+//                mFiles.get(position).getFileDate().toString());
 
-        holder.title.setOnClickListener(new View.OnClickListener() {
+        holder.txt_sizeFile.setText(
+                mFiles.get(position).getFileSize());
+
+
+        holder.holder_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openFile(position);
