@@ -2,6 +2,8 @@ package com.example.screenshotfulllayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.ReceiverCallNotAllowedException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +12,16 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class PdfAdapter extends RecyclerView.Adapter<PdfHolder> {
 
     private final List<FileModel> mFiles;
     private final Context ctx;
+
 
     public PdfAdapter(ArrayList files, Context ctx) {
         mFiles = files;
@@ -32,12 +36,13 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfHolder> {
 
     @Override
     public void onBindViewHolder(PdfHolder holder, final int position) {
-        holder.txt_name.setText(
+    holder.txt_name.setText(
                 mFiles.get(position).getFileName());
-//        holder.txt_data.setText(
-//                mFiles.get(position).getFileDate().toString());
-
-        holder.txt_sizeFile.setText(
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+    Date dateFormatter = mFiles.get(position).getFileDate();
+    String dateText = dateFormat.format(dateFormatter);
+    holder.txt_data.setText(dateText);
+    holder.txt_sizeFile.setText(
                 mFiles.get(position).getFileSize());
 
 
